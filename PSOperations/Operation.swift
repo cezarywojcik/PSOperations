@@ -14,7 +14,7 @@ import Foundation
     extended readiness requirements, as well as notify many interested parties 
     about interesting operation state changes
 */
-public class Operation: NSOperation {
+public class Operation: NSOperation, OperationDebuggable {
     
     /* The completionBlock property has unexpected behaviors such as executing twice and executing on unexpected threads. BlockObserver
      * executes in an expected manner.
@@ -429,6 +429,24 @@ public class Operation: NSOperation {
             the behavior you're wishing to create.
         */
         fatalError("Waiting on operations is an anti-pattern. Remove this ONLY if you're absolutely sure there is No Other Way™.")
+    }
+
+    /**
+     This method is used for debugging the current state of an `Operation`.
+
+     - returns: An `OperationDebugData` object containing debug data for the current `Operation`.
+     */
+    public func debugData() -> OperationDebugData {
+        return OperationDebugData(
+            description: "Operation: \(String(self))",
+            properties: [
+                "cancelled": String(self.cancelled),
+                "state": String(self.state),
+                "errorCount": String(self._internalErrors.count),
+                "QOS": self.qualityOfService.stringRepresentation()
+            ],
+            conditions: self.conditions.map { String($0) },
+            dependencies: self.dependencies.map { ($0 as? OperationDebuggable)?.debugData() ?? $0.debugDataNSOperation() })
     }
     
 }
