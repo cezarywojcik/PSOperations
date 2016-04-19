@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 	s.name         	= "PSOperations"
-	s.version      	= "2.2.0"
+	s.version      	= "2.2.1"
 	s.summary      	= "This is an adaptation of the sample code provided in the Advanced NSOperations session of WWDC 2015"
 	s.description  	= <<-DESC
 	This is an adaptation of the sample code provided in the [Advanced NSOperations session of WWDC 2015](https://developer.apple.com/videos/wwdc/2015/?id=226).  This code has been updated to work with the latest Swift changes as of Xcode 7.  For usage examples, see WWDC 2015 Advanced NSOperations and/or look at the included unit tests.
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
 	DESC
 
-	s.homepage	= "https://github.com/pluralsight/PSOperations"
+	s.homepage	= "https://github.com/cezarywojcik/PSOperations"
 	s.license	= { :type => 'MIT' }
 	s.author	= "Matt McMurry", "Mark Schultz"
 
@@ -37,6 +37,6 @@ Pod::Spec.new do |s|
 
 	s.requires_arc = true
 
-	s.source 	= {  git: "https://github.com/pluralsight/PSOperations.git",  tag: s.version.to_s  }
+	s.source 	= {  git: "https://github.com/cezarywojcik/PSOperations.git",  tag: s.version.to_s  }
 	s.source_files = 'PSOperations/**/*.swift'
 end
