@@ -394,8 +394,8 @@ public class Operation: NSOperation, OperationDebuggable {
             hasFinishedAlready = true
             state = .Finishing
             
-            _internalErrors += errors
-          
+            _internalErrors.appendContentsOf(errors)
+
             finished(_internalErrors)
             
             for observer in observers {
