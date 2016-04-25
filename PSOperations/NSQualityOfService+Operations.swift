@@ -7,9 +7,9 @@
 
 import Foundation
 
-public extension NSQualityOfService {
+extension NSQualityOfService: CustomDebugStringConvertible {
 
-    func stringRepresentation() -> String {
+    public var debugDescription: String {
         switch self {
         case .UserInteractive:
             return "UserInteractive"
