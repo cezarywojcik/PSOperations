@@ -30,9 +30,9 @@ public class OperationDebugData {
 
     public init(
         description: String,
-        properties: [String: String],
-        conditions: [String],
-        dependencies: [OperationDebugData],
+        properties: [String: String] = [:],
+        conditions: [String] = [],
+        dependencies: [OperationDebugData] = [],
         subOperations: [OperationDebugData] = []) {
         self.description = description
         self.properties = properties
@@ -66,8 +66,8 @@ public class OperationDebugData {
      - parameter logger: The `Logger` to use for output.
      */
     private static func dumpRecursiveHelper(data data: OperationDebugData, depth: Int, logger: Logger) {
-        guard depth <= self.dumpDepthLimit else {
-            logger("*** Reached a max recursive dump depth limit of: \(self.dumpDepthLimit ) ***")
+        guard depth <= dumpDepthLimit else {
+            logger("*** Reached a max recursive dump depth limit of: \(dumpDepthLimit ) ***")
             return
         }
 

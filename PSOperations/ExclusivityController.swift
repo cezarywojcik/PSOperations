@@ -14,7 +14,7 @@ import Foundation
     We use a singleton because mutual exclusivity must be enforced across the entire
     app, regardless of the `OperationQueue` on which an `Operation` was executed.
 */
-class ExclusivityController {
+public class ExclusivityController {
     static let sharedExclusivityController = ExclusivityController()
     
     private let serialQueue = dispatch_queue_create("Operations.ExclusivityController", DISPATCH_QUEUE_SERIAL)
@@ -75,5 +75,16 @@ class ExclusivityController {
             operations[category] = operationsWithThisCategory
         }
     }
-    
+
+    static public func debugData() -> OperationDebugData {
+        let allCategoriesDebugData: [OperationDebugData] = sharedExclusivityController.operations.flatMap { (category, operationsArray) in
+            guard !operationsArray.isEmpty else {
+                return nil
+            }
+            let categoryDebugData = operationsArray.map { $0.debugData() }
+            return OperationDebugData(description: category, subOperations: categoryDebugData)
+        }
+        return OperationDebugData(description: "\(self)", subOperations: allCategoriesDebugData)
+    }
+
 }

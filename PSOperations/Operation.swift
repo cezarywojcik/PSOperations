@@ -438,15 +438,15 @@ public class Operation: NSOperation, OperationDebuggable {
      */
     public func debugData() -> OperationDebugData {
         return OperationDebugData(
-            description: "Operation: \(String(self))",
+            description: "Operation: \(self)",
             properties: [
-                "cancelled": String(self.cancelled),
-                "state": String(self.state),
-                "errorCount": String(self._internalErrors.count),
-                "QOS": self.qualityOfService.stringRepresentation()
+                "cancelled": String(cancelled),
+                "state": String(state),
+                "errorCount": String(_internalErrors.count),
+                "QOS": String(qualityOfService)
             ],
-            conditions: self.conditions.map { String($0) },
-            dependencies: self.dependencies.map { ($0 as? OperationDebuggable)?.debugData() ?? $0.debugDataNSOperation() })
+            conditions: conditions.map { String($0) },
+            dependencies: dependencies.map { ($0 as? OperationDebuggable)?.debugData() ?? $0.debugDataNSOperation() })
     }
     
 }

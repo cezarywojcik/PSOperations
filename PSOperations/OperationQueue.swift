@@ -153,14 +153,12 @@ public class OperationQueue: NSOperationQueue, OperationDebuggable {
      - returns: An `OperationDebugData` object containing debug data for the current `OperationQueue`.
      */
     public func debugData() -> OperationDebugData {
-        let queueDebugData = self.operations.map { ($0 as? OperationDebuggable)?.debugData() ?? $0.debugDataNSOperation() }
+        let queueDebugData = operations.map { ($0 as? OperationDebuggable)?.debugData() ?? $0.debugDataNSOperation() }
         return OperationDebugData(
             description: "Queue",
             properties: [
-                "numOperations": String(self.operations.count)
+                "numOperations": String(operations.count)
             ],
-            conditions: [],
-            dependencies: [],
             subOperations: queueDebugData)
     }
 
