@@ -49,13 +49,13 @@ extension NSOperation {
      */
     public func debugDataNSOperation() -> OperationDebugData {
         return OperationDebugData(
-            description: "NSOperation: \(String(self))",
+            description: "NSOperation: \(self)",
             properties: [
-                "cancelled": String(self.cancelled),
-                "ready": String(self.ready),
-                "executing": String(self.executing),
-                "finished": String(self.finished),
-                "QOS": self.qualityOfService.stringRepresentation()
+                "cancelled": String(cancelled),
+                "ready": String(ready),
+                "executing": String(executing),
+                "finished": String(finished),
+                "QOS": String(qualityOfService)
             ],
             conditions: [],
             dependencies: self.dependencies.map { ($0 as? OperationDebuggable)?.debugData() ?? $0.debugDataNSOperation()})
