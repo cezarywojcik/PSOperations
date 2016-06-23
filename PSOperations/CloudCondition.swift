@@ -40,11 +40,11 @@ public struct CloudContainerCondition: OperationCondition {
         self.permission = permission
     }
     
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         return CloudKitPermissionOperation(container: container, permission: permission)
     }
     
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         container.verifyPermission(permission, requestingIfNecessary: false) { error in
             if let error = error {
                 let conditionError = NSError(code: .ConditionFailed, userInfo: [
@@ -66,7 +66,7 @@ public struct CloudContainerCondition: OperationCondition {
     This operation asks the user for permission to use CloudKit, if necessary.
     If permission has already been granted, this operation will quickly finish.
 */
-class CloudKitPermissionOperation: Operation {
+class CloudKitPermissionOperation: AdvancedOperation {
     let container: CKContainer
     let permission: CKApplicationPermissions
     

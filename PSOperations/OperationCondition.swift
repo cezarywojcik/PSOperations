@@ -39,10 +39,10 @@ public protocol OperationCondition {
             expressing that as multiple conditions. Alternatively, you could return
             a single `GroupOperation` that executes multiple operations internally.
     */
-    func dependencyForOperation(operation: Operation) -> NSOperation?
+    func dependencyForOperation(operation: AdvancedOperation) -> NSOperation?
     
     /// Evaluate the condition, to see if it has been satisfied or not.
-    func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void)
+    func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void)
 }
 
 /**
@@ -78,7 +78,7 @@ func ==(lhs: OperationConditionResult, rhs: OperationConditionResult) -> Bool {
 // MARK: Evaluate Conditions
 
 struct OperationConditionEvaluator {
-    static func evaluate(conditions: [OperationCondition], operation: Operation, completion: [NSError] -> Void) {
+    static func evaluate(conditions: [OperationCondition], operation: AdvancedOperation, completion: [NSError] -> Void) {
         // Check conditions.
         let conditionGroup = dispatch_group_create()
 

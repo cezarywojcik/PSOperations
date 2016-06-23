@@ -19,26 +19,26 @@ import Foundation
     `OperationQueue` and uses it to manage dependencies.
 */
 @objc public protocol OperationQueueDelegate: NSObjectProtocol {
-    optional func operationQueue(operationQueue: OperationQueue, willAddOperation operation: NSOperation)
-    optional func operationQueue(operationQueue: OperationQueue, operationDidFinish operation: NSOperation, withErrors errors: [NSError])
+    optional func operationQueue(operationQueue: AdvancedOperationQueue, willAddOperation operation: NSOperation)
+    optional func operationQueue(operationQueue: AdvancedOperationQueue, operationDidFinish operation: NSOperation, withErrors errors: [NSError])
 }
 
 /**
-    `OperationQueue` is an `NSOperationQueue` subclass that implements a large
-    number of "extra features" related to the `Operation` class:
+    `AdvancedOperationQueue` is an `NSOperationQueue` subclass that implements a large
+    number of "extra features" related to the `AdvancedOperation` class:
     
     - Notifying a delegate of all operation completion
     - Extracting generated dependencies from operation conditions
     - Setting up dependencies to enforce mutual exclusivity
 */
-public class OperationQueue: NSOperationQueue, OperationDebuggable {
+public class AdvancedOperationQueue: NSOperationQueue, OperationDebuggable {
     private let opsQueue = dispatch_queue_create("com.psoperations", DISPATCH_QUEUE_SERIAL)
     private var ops: Set<NSOperation> = Set()
     
     public weak var delegate: OperationQueueDelegate?
     
     override public  func addOperation(operation: NSOperation) {
-        if let op = operation as? Operation {
+        if let op = operation as? AdvancedOperation {
             
             // Set up a `BlockObserver` to invoke the `OperationQueueDelegate` method.
             let delegate = BlockObserver(
@@ -114,7 +114,7 @@ public class OperationQueue: NSOperationQueue, OperationDebuggable {
             and it's now it a state where it can proceed with evaluating conditions,
             if appropriate.
         */
-        if let op = operation as? Operation {
+        if let op = operation as? AdvancedOperation {
             op.didEnqueue()
         }
     }

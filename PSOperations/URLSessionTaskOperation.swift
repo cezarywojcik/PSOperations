@@ -21,7 +21,7 @@ private var URLSessionTaskOperationKVOContext = 0
 
     An example usage of `URLSessionTaskOperation` can be seen in the `DownloadEarthquakesOperation`.
 */
-public class URLSessionTaskOperation: Operation {
+public class URLSessionTaskOperation: AdvancedOperation {
     let task: NSURLSessionTask
     
     private var observerRemoved = false

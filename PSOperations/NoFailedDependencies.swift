@@ -31,7 +31,7 @@ public struct NoFailedDependencies: OperationCondition {
     public init() { }
 
     /// Conforms to `OperationCondition` but there are no dependent operations.
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         return .None
     }
 
@@ -43,11 +43,11 @@ public struct NoFailedDependencies: OperationCondition {
      - parameter operation: the `Operation` which the condition is attached to.
      - parameter completion: the completion block which receives a `OperationConditionResult`.
      */
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         let dependencies = operation.dependencies
 
         let cancelled = dependencies.filter { $0.cancelled }
-        let failures = dependencies.filter { ($0 as? Operation)?.failed ?? false }
+        let failures = dependencies.filter { ($0 as? AdvancedOperation)?.failed ?? false }
 
         if !cancelled.isEmpty || !failures.isEmpty {
             // At least one dependency was cancelled or failed; the condition was not satisfied.

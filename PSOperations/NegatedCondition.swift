@@ -32,11 +32,11 @@ public struct NegatedCondition<T: OperationCondition>: OperationCondition {
         self.condition = condition
     }
     
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         return condition.dependencyForOperation(operation)
     }
     
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         condition.evaluateForOperation(operation) { result in
             switch result {
             case .Failed(_):

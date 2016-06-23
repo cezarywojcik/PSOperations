@@ -56,11 +56,11 @@ public struct UserNotificationCondition: OperationCondition {
         self.behavior = behavior
     }
     
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         return UserNotificationPermissionOperation(settings: settings, application: application, behavior: behavior)
     }
     
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         let result: OperationConditionResult
         
         let current = application.currentUserNotificationSettings()
@@ -87,7 +87,7 @@ public struct UserNotificationCondition: OperationCondition {
     A private `Operation` subclass to register a `UIUserNotificationSettings`
     object with a `UIApplication`, prompting the user for permission if necessary.
 */
-private class UserNotificationPermissionOperation: Operation {
+private class UserNotificationPermissionOperation: AdvancedOperation {
     let settings: UIUserNotificationSettings
     let application: UIApplication
     let behavior: UserNotificationCondition.Behavior

@@ -15,12 +15,12 @@ import Foundation
 public struct BlockObserver: OperationObserver {
     // MARK: Properties
     
-    private let startHandler: (Operation -> Void)?
-    private let cancelHandler: (Operation -> Void)?
-    private let produceHandler: ((Operation, NSOperation) -> Void)?
-    private let finishHandler: ((Operation, [NSError]) -> Void)?
+    private let startHandler: (AdvancedOperation -> Void)?
+    private let cancelHandler: (AdvancedOperation -> Void)?
+    private let produceHandler: ((AdvancedOperation, NSOperation) -> Void)?
+    private let finishHandler: ((AdvancedOperation, [NSError]) -> Void)?
     
-    public init(startHandler: (Operation -> Void)? = nil, cancelHandler: (Operation -> Void)? = nil, produceHandler: ((Operation, NSOperation) -> Void)? = nil, finishHandler: ((Operation, [NSError]) -> Void)? = nil) {
+    public init(startHandler: (AdvancedOperation -> Void)? = nil, cancelHandler: (AdvancedOperation -> Void)? = nil, produceHandler: ((AdvancedOperation, NSOperation) -> Void)? = nil, finishHandler: ((AdvancedOperation, [NSError]) -> Void)? = nil) {
         self.startHandler = startHandler
         self.cancelHandler = cancelHandler
         self.produceHandler = produceHandler
@@ -29,19 +29,19 @@ public struct BlockObserver: OperationObserver {
     
     // MARK: OperationObserver
     
-    public func operationDidStart(operation: Operation) {
+    public func operationDidStart(operation: AdvancedOperation) {
         startHandler?(operation)
     }
     
-    public func operationDidCancel(operation: Operation) {
+    public func operationDidCancel(operation: AdvancedOperation) {
         cancelHandler?(operation)
     }
     
-    public func operation(operation: Operation, didProduceOperation newOperation: NSOperation) {
+    public func operation(operation: AdvancedOperation, didProduceOperation newOperation: NSOperation) {
         produceHandler?(operation, newOperation)
     }
     
-    public func operationDidFinish(operation: Operation, errors: [NSError]) {
+    public func operationDidFinish(operation: AdvancedOperation, errors: [NSError]) {
         finishHandler?(operation, errors)
     }
 }

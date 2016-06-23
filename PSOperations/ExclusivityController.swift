@@ -18,7 +18,7 @@ public class ExclusivityController {
     static let sharedExclusivityController = ExclusivityController()
     
     private let serialQueue = dispatch_queue_create("Operations.ExclusivityController", DISPATCH_QUEUE_SERIAL)
-    private var operations: [String: [Operation]] = [:]
+    private var operations: [String: [AdvancedOperation]] = [:]
     
     private init() {
         /*
@@ -28,7 +28,7 @@ public class ExclusivityController {
     }
     
     /// Registers an operation as being mutually exclusive
-    func addOperation(operation: Operation, categories: [String]) {
+    func addOperation(operation: AdvancedOperation, categories: [String]) {
         /*
             This needs to be a synchronous operation.
             If this were async, then we might not get around to adding dependencies 
@@ -42,7 +42,7 @@ public class ExclusivityController {
     }
     
     /// Unregisters an operation from being mutually exclusive.
-    func removeOperation(operation: Operation, categories: [String]) {
+    func removeOperation(operation: AdvancedOperation, categories: [String]) {
         dispatch_async(serialQueue) {
             for category in categories {
                 self.noqueue_removeOperation(operation, category: category)
@@ -51,9 +51,9 @@ public class ExclusivityController {
     }
     
     
-    // MARK: Operation Management
+    // MARK: AdvancedOperationManagement
     
-    private func noqueue_addOperation(operation: Operation, category: String) {
+    private func noqueue_addOperation(operation: AdvancedOperation, category: String) {
         var operationsWithThisCategory = operations[category] ?? []
         
         if let last = operationsWithThisCategory.last {
@@ -65,7 +65,7 @@ public class ExclusivityController {
         operations[category] = operationsWithThisCategory
     }
     
-    private func noqueue_removeOperation(operation: Operation, category: String) {
+    private func noqueue_removeOperation(operation: AdvancedOperation, category: String) {
         let matchingOperations = operations[category]
 
         if var operationsWithThisCategory = matchingOperations,
