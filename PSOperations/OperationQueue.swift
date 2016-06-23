@@ -38,7 +38,6 @@ public class OperationQueue: NSOperationQueue, OperationDebuggable {
     public weak var delegate: OperationQueueDelegate?
     
     override public  func addOperation(operation: NSOperation) {
-        addOpToSet(operation)
         if let op = operation as? Operation {
             
             // Set up a `BlockObserver` to invoke the `OperationQueueDelegate` method.
@@ -47,10 +46,13 @@ public class OperationQueue: NSOperationQueue, OperationDebuggable {
                 produceHandler: { [weak self] in
                     self?.addOperation($1)
                 },
-                finishHandler: { [weak self] in
+                finishHandler: { [weak self] finishedOperation, errors in
                     if let q = self {
-                        q.delegate?.operationQueue?(q, operationDidFinish: $0, withErrors: $1)
-                        q.removeOpFromSet($0)
+                        
+                        q.delegate?.operationQueue?(q, operationDidFinish: finishedOperation, withErrors: errors)
+                        //Remove deps to avoid cascading deallocation error
+                        //http://stackoverflow.com/questions/19693079/nsoperationqueue-bug-with-dependencies
+                        finishedOperation.dependencies.forEach { finishedOperation.removeDependency($0) }
                     }
                 }
             )
@@ -98,7 +100,9 @@ public class OperationQueue: NSOperationQueue, OperationDebuggable {
             operation.addCompletionBlock { [weak self, weak operation] in
                 guard let queue = self, let operation = operation else { return }
                 queue.delegate?.operationQueue?(queue, operationDidFinish: operation, withErrors: [])
-                queue.removeOpFromSet(operation)
+                //Remove deps to avoid cascading deallocation error
+                //http://stackoverflow.com/questions/19693079/nsoperationqueue-bug-with-dependencies
+                operation.dependencies.forEach { operation.removeDependency($0) }
             }
         }
         
@@ -130,6 +134,7 @@ public class OperationQueue: NSOperationQueue, OperationDebuggable {
             }
         }
     }
+<<<<<<< HEAD
     
     func addOpToSet(op: NSOperation) {
         dispatch_async(opsQueue) {
@@ -158,4 +163,6 @@ public class OperationQueue: NSOperationQueue, OperationDebuggable {
             subOperations: queueDebugData)
     }
 
+=======
+>>>>>>> upstream/master
 }
