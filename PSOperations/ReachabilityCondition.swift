@@ -28,11 +28,11 @@ public struct ReachabilityCondition: OperationCondition {
         self.host = host
     }
     
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         return nil
     }
     
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         ReachabilityController.requestReachability(host) { reachable in
             if reachable {
                 completion(.Satisfied)

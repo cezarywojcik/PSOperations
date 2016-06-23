@@ -72,7 +72,7 @@ class URLSessionTaskOperationTests: XCTestCase {
         }
         
         let op = URLSessionTaskOperation(task: taskThing)
-        let q = OperationQueue()
+        let q = AdvancedOperationQueue()
         q.addOperation(op)
         
         keyValueObservingExpectationForObject(op, keyPath: "isFinished") {
@@ -94,7 +94,7 @@ class URLSessionTaskOperationTests: XCTestCase {
         }
         
         let op = URLSessionTaskOperation(task: taskThing)
-        let q = OperationQueue()
+        let q = AdvancedOperationQueue()
         q.suspended = true
         q.addOperation(op)
         op.cancel()

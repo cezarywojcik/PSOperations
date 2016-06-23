@@ -30,12 +30,12 @@ struct SilentCondition<T: OperationCondition>: OperationCondition {
         self.condition = condition
     }
     
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         // Returning nil means we will never a dependency to be generated.
         return nil
     }
     
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         condition.evaluateForOperation(operation, completion: completion)
     }
 }

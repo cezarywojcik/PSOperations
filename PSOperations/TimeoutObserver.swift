@@ -27,7 +27,7 @@ public struct TimeoutObserver: OperationObserver {
     
     // MARK: OperationObserver
     
-    public func operationDidStart(operation: Operation) {
+    public func operationDidStart(operation: AdvancedOperation) {
         // When the operation starts, queue up a block to cause it to time out.
         let when = dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * Double(NSEC_PER_SEC)))
 
@@ -46,15 +46,15 @@ public struct TimeoutObserver: OperationObserver {
         }
     }
     
-    public func operationDidCancel(operation: Operation) {
+    public func operationDidCancel(operation: AdvancedOperation) {
         // No op.
     }
 
-    public func operation(operation: Operation, didProduceOperation newOperation: NSOperation) {
+    public func operation(operation: AdvancedOperation, didProduceOperation newOperation: NSOperation) {
         // No op.
     }
 
-    public func operationDidFinish(operation: Operation, errors: [NSError]) {
+    public func operationDidFinish(operation: AdvancedOperation, errors: [NSError]) {
         // No op.
     }
 }

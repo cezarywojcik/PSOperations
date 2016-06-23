@@ -36,11 +36,11 @@ public struct LocationCondition: OperationCondition {
         self.usage = usage
     }
     
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         return LocationPermissionOperation(usage: usage)
     }
     
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         let enabled = CLLocationManager.locationServicesEnabled()
         let actual = CLLocationManager.authorizationStatus()
         
@@ -88,7 +88,7 @@ public struct LocationCondition: OperationCondition {
  A private `Operation` that will request permission to access the user's location,
  if permission has not already been granted.
  */
-class LocationPermissionOperation: Operation {
+class LocationPermissionOperation: AdvancedOperation {
     let usage: LocationCondition.Usage
     var manager: CLLocationManager?
     

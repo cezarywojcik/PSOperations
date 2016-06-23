@@ -14,7 +14,7 @@ import Foundation
     extended readiness requirements, as well as notify many interested parties 
     about interesting operation state changes
 */
-public class Operation: NSOperation, OperationDebuggable {
+public class AdvancedOperation: NSOperation, OperationDebuggable {
     
     /* The completionBlock property has unexpected behaviors such as executing twice and executing on unexpected threads. BlockObserver
      * executes in an expected manner.
@@ -447,10 +447,10 @@ public class Operation: NSOperation, OperationDebuggable {
 }
 
 // Simple operator functions to simplify the assertions used above.
-private func <(lhs: Operation.State, rhs: Operation.State) -> Bool {
+private func <(lhs: AdvancedOperation.State, rhs: AdvancedOperation.State) -> Bool {
     return lhs.rawValue < rhs.rawValue
 }
 
-private func ==(lhs: Operation.State, rhs: Operation.State) -> Bool {
+private func ==(lhs: AdvancedOperation.State, rhs: AdvancedOperation.State) -> Bool {
     return lhs.rawValue == rhs.rawValue
 }

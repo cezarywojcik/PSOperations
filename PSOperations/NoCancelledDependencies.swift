@@ -22,11 +22,11 @@ public struct NoCancelledDependencies: OperationCondition {
         // No op.
     }
     
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         return nil
     }
     
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         // Verify that all of the dependencies executed.
         let cancelled = operation.dependencies.filter { $0.cancelled }
 

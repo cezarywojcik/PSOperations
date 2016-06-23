@@ -60,12 +60,12 @@ public struct Capability<C: CapabilityType>: OperationCondition {
         self.shouldRequest = requestIfNecessary
     }
     
-    public func dependencyForOperation(operation: Operation) -> NSOperation? {
+    public func dependencyForOperation(operation: AdvancedOperation) -> NSOperation? {
         guard shouldRequest == true else { return nil }
         return AuthorizeCapability(capability: capability)
     }
     
-    public func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+    public func evaluateForOperation(operation: AdvancedOperation, completion: OperationConditionResult -> Void) {
         dispatch_async(dispatch_get_main_queue()) {
             self.capability.requestStatus { status in
                 if let error = status.error {
@@ -82,7 +82,7 @@ public struct Capability<C: CapabilityType>: OperationCondition {
     }
 }
 
-private class AuthorizeCapability<C: CapabilityType>: Operation {
+private class AuthorizeCapability<C: CapabilityType>: AdvancedOperation {
     private let capability: C
     
     init(capability: C) {
