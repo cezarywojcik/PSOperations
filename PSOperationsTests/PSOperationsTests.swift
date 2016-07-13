@@ -1063,7 +1063,7 @@ class PSOperationsTests: XCTestCase {
     
     func testOperationDidStartWhenSetMaxConcurrencyCountOnTheQueue() {
         
-        let opQueue = OperationQueue()
+        let opQueue = AdvancedOperationQueue()
         opQueue.maxConcurrentOperationCount = 1;
         
         let exp1 = expectationWithDescription("1")
@@ -1088,9 +1088,9 @@ class PSOperationsTests: XCTestCase {
         waitForExpectationsWithTimeout(1.0, handler: nil)
     }
     func testOperationFinishedWithErrors() {
-        let opQ = OperationQueue()
+        let opQ = AdvancedOperationQueue()
         
-        class ErrorOp : Operation {
+        class ErrorOp : AdvancedOperation {
             
             let sema = dispatch_semaphore_create(0)
             
@@ -1115,9 +1115,9 @@ class PSOperationsTests: XCTestCase {
     }
     
     func testOperationCancelledWithErrors() {
-        let opQ = OperationQueue()
+        let opQ = AdvancedOperationQueue()
         
-        class ErrorOp : Operation {
+        class ErrorOp : AdvancedOperation {
             
             let sema = dispatch_semaphore_create(0)
             
