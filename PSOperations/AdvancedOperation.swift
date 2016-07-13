@@ -393,7 +393,7 @@ public class AdvancedOperation: NSOperation, OperationDebuggable {
         if !hasFinishedAlready {
             hasFinishedAlready = true
             state = .Finishing
-            
+
             _internalErrors.appendContentsOf(errors)
 
             finished(_internalErrors)
